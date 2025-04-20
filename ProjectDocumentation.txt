@@ -1,0 +1,18 @@
+The purpose of this lab was to deploy the application we have developed in lab 3 and tested in minikube to the azure kubernates service 
+server. This lab required no changes to the actual code from the previous lab and focused on updating the overlay files to be correctly
+configured for deployment. 
+
+After updating the namespace to my own (asiddiqui6) in the overlay files and submission-namespace.yaml, as well as updating the tag of the 
+image being pushed to the azure container registry (ACR), we're ready to deploy and we can do so in the following way:
+
+1. Sign in and authenticate into the Azure Workspace: az login --tenant berkeleydatasciw255.onmicrosoft.com
+2. Set the subscription to the one being used for our class (should be done by default); if its not we can use:
+
+    az account set --subscription=0257ef73-2cbf-424a-af32-f3d41524e705
+
+3. Next we want to authenticate to the AKS server: az aks get-credentials --name w255-aks --resource-group w255 --overwrite-existing
+4. We want to set our context to w255-aks so that we modify files server side: kubectl config use-context w255-aks
+5. Next we want to authenticate into the ACR to push our image for use in deployment: az acr login --name w255mids
+6. At this point we can build our docker image, tag it to match the tage we specified in our .YAML files, and push it to ACR
+7. From here we can deploy our application
+8. We want to check the status of the pods to ensure our redis and deployment is running as expected
